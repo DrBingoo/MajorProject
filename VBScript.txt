@@ -24,7 +24,7 @@ ActiveWindow.FreezePanes = True
 
 'to color/highlight the selected cells pls google the color you want example blue rgb '
 
-Range("A1").EntireColumn.Interior.Color = RGB(255, 0, 0)
+Range("A1").EntireColumn.Interior.Color = RGB(255, 255, 0)
 Range("H1").EntireColumn.Interior.Color = RGB(0, 150, 255)
 Range("L1").EntireColumn.Interior.Color = RGB(0, 150, 255)
 Range("J1:K1").EntireColumn.Interior.Color = RGB(255, 255, 0)
