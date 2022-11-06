@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "VBScript"
+Attribute VB_Name = "VBScript"
 Sub Format_Excel()
 'To loop the worksheet/workbook to warp text, sws stand for starting worksheet, ws stand for worksheet'
 Dim ws As Worksheet
@@ -8,11 +8,13 @@ Set sws = ActiveSheet 'remember which worksheet is active from the start'
 For Each ws In ThisWorkbook.Worksheets
 ws.Activate
 
-'if you want to unwrap the text change it to false, the rest is all border and '
+'if you want to unwrap the text change it to false, the rest is all border and alignment '
 Cells.WrapText = True
 Cells.ColumnWidth = 25
 Cells.Borders.LineStyle = xlContinous
 Cells.Borders.Weight = xlThin
+Cells.HorizontalAlignment = xlCenter
+Cells.VerticalAlignment = xlCenter
 
 'to freeze top rows to off it just change the true to false'
 
@@ -22,21 +24,24 @@ With ActiveWindow
 End With
 ActiveWindow.FreezePanes = True
 
-'to color/highlight the selected cells pls google the color you want example blue rgb '
+'to color and format the header row '
 
-Range("A1").EntireColumn.Interior.Color = RGB(255, 255, 0)
-Range("H1").EntireColumn.Interior.Color = RGB(0, 150, 255)
-Range("L1").EntireColumn.Interior.Color = RGB(0, 150, 255)
-Range("J1:K1").EntireColumn.Interior.Color = RGB(255, 255, 0)
-Range("M1:N1").EntireColumn.Interior.Color = RGB(255, 255, 0)
+Rows("1:1").Interior.Color = RGB(0, 32, 96)
+Rows("1:1").Font.Name = "Calibri"
+Rows("1:1").Font.Size = 14
+Rows("1:1").Font.Color = RGB(255, 255, 255)
+Rows("1:1").Font.Bold = True
 
-'to bold the entire column to off the bold just change it to false'
-
-Range("A1").EntireColumn.Font.Bold = True
-Range("H1").EntireColumn.Font.Bold = True
-Range("L1").EntireColumn.Font.Bold = True
-Range("J1:K1").EntireColumn.Font.Bold = True
-Range("M1:N1").EntireColumn.Font.Bold = True
+'to apply Conditional Formating with a formula to color every second row grey starting after the header row.'
+Rows("2:1048576").FormatConditions.Add Type:=xlExpression, Formula1:= _
+        "= MOD(ROW(),2)"
+    Rows("2:1048576").FormatConditions(Rows("2:1048576").FormatConditions.Count).SetFirstPriority
+    With Rows("2:1048576").FormatConditions(1).Interior
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorDark1
+        .TintAndShade = -4.99893185216834E-02
+    End With
+    Rows("2:1048576").FormatConditions(1).StopIfTrue = False
 
 Next
 
